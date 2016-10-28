@@ -34,4 +34,4 @@ ADD db2jcc4.jar /usr/src/jasperreports-server/buildomatic/conf_source/db/app-srv
 ENV JAVA_OPTS="-Xms1024m -Xmx2048m -XX:PermSize=32m -XX:MaxPermSize=512m -Xss2m -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled"
 
 # Wait for DB to start-up, start up JasperServer and bootstrap if required
-ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/bin/bash", "-c", "/entrypoint.sh"]
