@@ -1,5 +1,29 @@
 #!/bin/bash
-set -e
+
+uri=$DATABASE_URL
+
+if [ -z "$uri" ]; then
+    set -e
+else
+    tmps=$(echo $uri | tr "://@" "\n")
+    values=()
+
+    for tmp in $tmps
+    do
+      values+=("$tmp")
+    done
+
+    DB_TYPE=${values[0]}
+    DB_USER=${values[1]}
+    DB_PASSWORD=${values[2]}
+    DB_HOST=${values[3]}
+    DB_PORT=${values[4]}
+    DB_NAME=${values[5]}
+
+    if [ "$DB_TYPE" == "postgres" ]; then
+        DB_TYPE="postgresql"
+    fi
+fi
 
 # wait upto 30 seconds for the database to start before connecting
 /wait-for-it.sh $DB_HOST:$DB_PORT -t 30
